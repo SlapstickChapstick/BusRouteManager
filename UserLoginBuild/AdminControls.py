@@ -1,6 +1,5 @@
 import pyodbc
 import os
-import RouteManager
 import MainMenu
 
 conn_str = (
@@ -13,7 +12,7 @@ crsr = cnxn.cursor()
 
 def Menu(loginName):
 	os.system('cls')
-	print("--- Route Manager ---\n")
+	print("--- Route Manager ---")
 	
 	print("\n1. Change Password\n2. Create User\n3. Delete User\n4. Back")
 	option = int(input("\nOPTION: "))
