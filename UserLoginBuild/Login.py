@@ -6,7 +6,7 @@ import sys
 
 conn_str = (
     r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};'
-    r'DBQ=S:\Olly Chapman - Apprenticeship\Assignments\Programs\TestSystem.accdb;'
+    r'DBQ=Database\TestSystem.accdb;'
     )
 
 try:

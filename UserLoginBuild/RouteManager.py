@@ -3,7 +3,7 @@ import os
 
 conn_str = (
     r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};'
-    r'DBQ=S:\Olly Chapman - Apprenticeship\Assignments\Programs\TestSystem.accdb;'
+    r'DBQ=Database\TestSystem.accdb;'
     )
 
 cnxn = pyodbc.connect(conn_str)
@@ -12,7 +12,7 @@ crsr = cnxn.cursor()
 def RouteMenu():
 	os.system('cls')
 	print("--- Route Manager ---\n")
-	print("1. View Routes\n2. Add Route\n3. Assign Driver\n4. Exit Route Manager\n")
+	print("1. View Routes\n2. Add Route\n3. Assign Vehicle\n4. Exit Route Manager\n")
 	option = int(input("OPTION: "))
 	
 	if option == 1:
@@ -22,7 +22,7 @@ def RouteMenu():
 		AddRoute()
 
 	elif option == 3:
-		AssignDriver()
+		AssignBus()
 
 	elif option == 4:
 		input("")
@@ -49,10 +49,11 @@ def AddRoute():
 		input("")
 		RouteMenu()
 
-def AssignDriver():
-		os.system('cls')
-		routeID = input("Route ID: BR-")
-		crsr.execute("SELECT * FROM Routes WHERE RouteID=?",routeID)
-		for rows in crsr.fetchall():
-			print(rows)
+def AssignBus():
+		routeID = input("\nRoute ID: BR-")
+		assignReg = input("Reg Number: ")
+		crsr.execute("UPDATE Routes SET BusReg=(?) WHERE RouteID=(?)",assignReg,routeID)
+		print("\nVehicle Assigned!")
+		input("")
+		RouteMenu()
 
