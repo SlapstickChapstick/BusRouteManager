@@ -47,21 +47,35 @@ def ChangePassword(loginName):
 			Menu(loginName)
 
 def CreateUser(loginName):
-	newFName = input("\nFirst Name: ")
-	newLName = input(" Last Name: ")
-	newUName = input("  Username: ")
-	newPassW = input("  Password: ")
-	newURole = input("      Role: ")
-	crsr.execute("INSERT INTO Users (FirstName,LastName,Username,Password,Role) VALUES(?, ?, ?, ?, ?)",newFName,newLName,newUName,newPassW,newURole)
-	cnxn.commit()
-	print("\nUser has been created!")
-	input("")
-	Menu(loginName)
+	crsr.execute("SELECT * From Users WHERE Username=?", loginName)
+	for rows in crsr.fetchall():
+		if rows.Role == "Admin":
+			newFName = input("\nFirst Name: ")
+			newLName = input(" Last Name: ")
+			newUName = input("  Username: ")
+			newPassW = input("  Password: ")
+			newURole = input("      Role: ")
+			crsr.execute("INSERT INTO Users (FirstName,LastName,Username,Password,Role) VALUES(?, ?, ?, ?, ?)",newFName,newLName,newUName,newPassW,newURole)
+			cnxn.commit()
+			print("\nUser has been created!")
+			input("")
+			Menu(loginName)
+		else:
+			print("You do not have the required permissions.")
+			input("")
+			Menu(loginName)
 
 def DeleteUser(loginName):
-	userToDel = input("\nUser to delete: ")
-	crsr.execute("DELETE FROM Users WHERE Username=?",userToDel)
-	cnxn.commit()
-	print("User deleted!")
-	input("")
-	Menu(loginName)
+	crsr.execute("SELECT * From Users WHERE Username=?", loginName)
+	for rows in crsr.fetchall():
+		if rows.Role == "Admin":
+			userToDel = input("\nUser to delete: ")
+			crsr.execute("DELETE FROM Users WHERE Username=?",userToDel)
+			cnxn.commit()
+			print("User deleted!")
+			input("")
+			Menu(loginName)
+		else:
+			print("You do not have the required permissions.")
+			input("")
+			Menu(loginName)
