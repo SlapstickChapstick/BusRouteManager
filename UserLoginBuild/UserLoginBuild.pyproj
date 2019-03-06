@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>476295a3-742e-4cf3-a82f-2ef48b5bbc1c</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>UserLoginBuild.py</StartupFile>
+    <StartupFile>Login.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,16 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="UserLoginBuild.py" />
+    <Compile Include="AdminControls.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Login.py" />
+    <Compile Include="MainMenu.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RouteManager.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
