@@ -11,8 +11,10 @@ cnxn = pyodbc.connect(conn_str)
 crsr = cnxn.cursor()
 
 def Menu(loginName):
+	title="Control Panel - Route Manager [User: "+loginName+"]"
+	os.system("title "+title)
 	os.system('cls')
-	print("--- Route Manager ---")
+	print("--- Control Panel ---")
 	
 	print("\n1. Change Password\n2. Create User\n3. Delete User\n4. Back")
 	option = int(input("\nOPTION: "))

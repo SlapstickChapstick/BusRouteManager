@@ -19,26 +19,29 @@ except (pyodbc.Error, pyodbc.OperationalError):
 
 
 def Login():
+	title="Login - Route Manager"
+	os.system("title "+title)
 	global loginName
 	os.system('cls')
-	print("--- Login ---")
+	print("--- Login ---\n")
 	loginName = input("Name: ")
 	crsr.execute("select * from Users where Username=(?)", loginName)
 
-	for row in crsr.fetchall():
-		if not row:
-			print("Username Not Found!")
-			input("")
-			Login()
-
+	row = crsr.fetchone()
+	if row:
 		crsr.execute("select Password from Users where Username=(?)", loginName)
 		lPass = input("Password: ")
 		if lPass == row.Password:
-			print("Access Granted!")
+			print("\nLogging in...")
+			time.sleep(2)
 			MainMenu.Menu(loginName)
 		else: 
 			print("Access Denied!")
 			time.sleep(2)
 			Login()
+	else:
+		print("Username not found!")
+		input("")
+		Login()
 
 Login()

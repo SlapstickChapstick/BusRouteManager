@@ -1,6 +1,9 @@
 import pyodbc
 import os
 import MainMenu
+from prettytable import PrettyTable
+
+tbl = PrettyTable()
 
 conn_str = (
     r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};'
@@ -34,10 +37,13 @@ def RouteMenu(loginName):
 def ViewRoutes(loginName):
 	os.system('cls')
 	crsr.execute("SELECT * FROM Routes")
-	print("    Route ID        Start           End      Bus Reg     Status")
-	print("------------------------------------------------------------------------")
+	tbl.field_names = ["Route ID","Start","End","Bus Reg","Status"]
+	
 	for rows in crsr.fetchall():
-		print("\t",rows.RouteID,"\t",rows.StartPoint,"\t",rows.EndPoint,"    ",rows.BusReg,"\t", rows.Status)
+		tbl.add_row([rows.RouteID,rows.StartPoint,rows.EndPoint,rows.BusReg,rows.Status])
+
+	tbl.padding_width = 2
+	print(tbl)
 
 	input("")
 	RouteMenu(loginName)
@@ -64,10 +70,16 @@ def AssignBus(loginName):
 
 def ChangeStatus(loginName):
 	routeID = input("\nRoute ID: ")
-	choice = int(input("\n1. Active\2. Inactive"))
-	if choice:
-		crsr.execute("UPDATE Routes SET BusReg=(?) WHERE RouteID=(?)",routeID)
-		print("\nVehicle Assigned!")
+	choice = int(input("\n1. Active\\n2. Inactive"))
+	if choice == 1:
+		crsr.execute("UPDATE Routes SET Status='Active' WHERE RouteID=(?)",routeID)
+		print("\nStatus Changed!")
+		cnxn.commit()
+		input("")
+		RouteMenu(loginName)
+	elif choice == 2:
+		crsr.execute("UPDATE Routes SET Status='Inactive' WHERE RouteID=(?)",routeID)
+		print("\nStatus Changed!")
 		cnxn.commit()
 		input("")
 		RouteMenu(loginName)

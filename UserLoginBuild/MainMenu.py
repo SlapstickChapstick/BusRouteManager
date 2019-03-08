@@ -4,9 +4,11 @@ import os
 import sys
 
 def Menu(loginName):
+		title="Menu - Route Manager [User: "+loginName+"]"
+		os.system("title "+title)
 		os.system('cls')
 		print("--- Menu ---")
-		print("\n1. Control Panel\n2. Route Manager\n3. Exit")
+		print("\n1. Route Manager\n2. Control Panel\n3. Exit")
 
 		try:
 			option = int(input("\nOPTION: "))
@@ -15,10 +17,10 @@ def Menu(loginName):
 			input("")
 
 		if option == 1:
-			AdminControls.Menu(loginName)
+			RouteManager.RouteMenu(loginName)
 		
 		elif option == 2:
-			RouteManager.RouteMenu(loginName)
+			AdminControls.Menu(loginName)
 
 		elif option == 3:
-			sys.exit()
+			sys.exit(0)
